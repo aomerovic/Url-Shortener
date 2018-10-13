@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Help</title>
+</head>
+<body>
+<style>
+    table,th,td
+    {
+        border:1px solid black;
+        border-collapse:collapse;
+    }
+    th,td
+    {
+        padding:5px;
+    }
+</style>
+<h3>URL Shortener:</h3>
+URL Shortener consists of configuration and user part.
+<br/>Configuration serves for:
+<ul>
+    <li>Create account</li>
+    <li>Register URL</li>
+    <li>Fetch statistics</li>
+</ul>
+To access Configuration part use REST call with JSON parameters.
+<br/>User part serves for redirection.
+<br/>
+<br/><b>Installation</b>
+<ul>
+    <li>There is no external dependencies, therefore no additional installation is required.</li>
+</ul>
+<b>Running</b>
+<ol>
+    <li>Start a web server.</li>
+    <li>Deploy the service war file to the web server.</li>
+</ol>
+<b>Usage</b>
+<br/>Use a client-side application to access following functionalities. All request and response types are application/json.
+<ol>
+    <li>
+        <u><i>Creating account</i></u>
+        <br/>HTTP Method: <b>POST</b>
+        <br/>URI: <b>/account</b>
+        <br/>Request Body: <b>accountId</b>
+        <ul>
+            <li>Example: {"accountId":"myAccount1"}</li>
+        </ul>
+        Response Body: <b>success</b>, <b>description</b>, <b>password</b>
+        <ul>
+            <li>Example: {"success":"true","description":"Your account is opened.","password":"xC345Fc0"}
+        </ul>
+        Description
+        <ul>
+            <li>"accountId" is mandatory. It's trimmed and case insensitive.
+                <br/>"success" can have two values: true and false. False value occurs if "accountId" is empty after trimming.
+                In that case status 415 is set. False value also occurs when "accountId" already exists. In that case status 409 is set.
+                Status 201 and "password" are set only when "success" is true. It is random generated 8 alphanumeric characters long string.
+                <br/>For each of these cases appropriate description is set.</li>
+        </ul>
+    </li>
+    <li>
+        <u><i>Registering URL</i></u>
+        <br/>HTTP Method: <b>POST</b>
+        <br/>URI: <b>/register</b>
+        <br/>Request Header: <b>Authorization</b>
+        <br/>Request Body: <b>url</b>, <b>redirectType</b>
+        <ul>
+            <li>Example: {"url":"http://stackoverflow.com/questions/1567929/website-safe-data-access-architecture-question?rq=1","redirectType":"301"}</li>
+        </ul>
+        Response Body: <b>shortUrl</b>
+        <ul>
+            <li>Example: {"shortUrl":"http://localhost:8080/xYswlE"}
+        </ul>
+        Description
+        <ul>
+            <li>"url" is shorten and is mandatory. "redirectType" is not, it can be 301, but if set as anything else, then it's 302.
+                <br/>"shortUrl" is not always set. Response Body is set empty when authorization fails, and for that case status is set to 401.
+                Response Body is also set to empty when "url" is empty after trimming. In that case status 415 is set.
+                If "url" was already registered it is updated and status is set to 201, else it is created and status is set to 200.</li>
+        </ul>
+    </li>
+    <li>
+        <u><i>Fetching statistics</i></u>
+        <br/>HTTP Method: <b>GET</b>
+        <br/>URI: <b>/statistic/{accountId}</b>
+        <br/>Request Header: <b>Authorization</b>
+        Response Body: <b>key:value</b>
+        <ul>
+            <li>Example: {"http://myweb.com/somelongurl/somedirectory/":"10","http://myweb.com/somelongurl1/somedirectory2/":"4","http://myweb.com/somelongurl3/somedirectory4/":"91"}
+        </ul>
+        Description
+        <ul>
+            <li>Response Body is set empty when authorization fails or account set in Authorization header differs from the one stated in URI, and for that case status is set to 401.
+                In other cases, status is set to 200, Response body is set to object populated with key:value order pairs for each url that that account registered.
+                Key represents registered url, and value represents number of times that url was called.</li>
+        </ul>
+    </li>
+    <li>
+        <u><i>Redirecting</i></u>
+        <br/>Description
+        <ul>
+            Entering shortUrl provided in "Registering URL" redirection occurs to registered url and number of calls for that url is incremented by 1.
+        </ul>
+    </li>
+</ol>
+</body>
+</html>
