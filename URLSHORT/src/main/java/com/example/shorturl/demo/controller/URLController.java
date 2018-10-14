@@ -119,16 +119,13 @@ public class URLController {
             urlService.save(urlModel);
 
             response =  "{\"shortUrl\":\"" + urlModel.getShortUrl() + "\"}";
-
         }
         else
         {
             response = "URL already registered";
         }
 
-
         return ResponseEntity.ok().body(response);
-
     }
     @RequestMapping(method = GET, value = "/{shortUrl}")
     public RedirectView redirect(@PathVariable("shortUrl") String shortUrl)
