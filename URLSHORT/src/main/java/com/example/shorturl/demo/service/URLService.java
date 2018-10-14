@@ -1,14 +1,10 @@
 package com.example.shorturl.demo.service;
 
-import com.example.shorturl.demo.data.URLsSave;
-import com.example.shorturl.demo.model.URLEntity;
 import com.example.shorturl.demo.model.URLModel;
 import com.example.shorturl.demo.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,20 +33,7 @@ public class URLService {
         urlRepository.save(urlModel);
         container.add(urlModel);
     }
-    public void incrementCounter(String url)
-    {
 
-        int counter = urlRepository.findByUrl(url).getCounter();
-        System.out.println(counter);
-        counter++;
-        urlRepository.findByUrl(url).setCounter(counter);
-        System.out.println(urlRepository.findByUrl(url).getCounter());
-        URLModel model = urlRepository.findByUrl(url);
-        System.out.println(model.getCounter());
-        System.out.println(model);
-
-        this.replace(model);
-    }
     public void replace(URLModel model)
     {
         System.out.println(model.getCounter());

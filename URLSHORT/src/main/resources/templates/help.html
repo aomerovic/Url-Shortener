@@ -17,30 +17,14 @@
     }
 </style>
 <h3>URL Shortener:</h3>
-URL Shortener consists of configuration and user part.
-<br/>Configuration serves for:
-<ul>
-    <li>Create account</li>
-    <li>Register URL</li>
-    <li>Fetch statistics</li>
-</ul>
-To access Configuration part use REST call with JSON parameters.
-<br/>User part serves for redirection.
-<br/>
-<br/><b>Installation</b>
-<ul>
-    <li>There is no external dependencies, therefore no additional installation is required.</li>
-</ul>
-<b>Running</b>
-<ol>
-    <li>Start a web server.</li>
-    <li>Deploy the service war file to the web server.</li>
-</ol>
+
 <b>Usage</b>
-<br/>Use a client-side application to access following functionalities. All request and response types are application/json.
+<br/>
+
 <ol>
+
     <li>
-        <u><i>Creating account</i></u>
+        <u><b>Creating account</b></u>
         <br/>HTTP Method: <b>POST</b>
         <br/>URI: <b>/account</b>
         <br/>Request Body: <b>accountId</b>
@@ -53,15 +37,18 @@ To access Configuration part use REST call with JSON parameters.
         </ul>
         Description
         <ul>
-            <li>"accountId" is mandatory. It's trimmed and case insensitive.
-                <br/>"success" can have two values: true and false. False value occurs if "accountId" is empty after trimming.
-                In that case status 415 is set. False value also occurs when "accountId" already exists. In that case status 409 is set.
-                Status 201 and "password" are set only when "success" is true. It is random generated 8 alphanumeric characters long string.
-                <br/>For each of these cases appropriate description is set.</li>
+            <li>"accountId" is mandatory, therefore you have to include it in request.
+                <br/>Account registration can be successful or unsuccessful. Successful registration occurs when "accountId" is
+                unique and not empty.
+                Unsuccessful registration occurs when "accountId" is empty. In that case you get Error 415. Also, you get Error 409 if "accountId"
+                already exists.
+                After successful registration you get a random generated password which is 8 alphanumeric characters long string.
+
         </ul>
     </li>
+    <br/>
     <li>
-        <u><i>Registering URL</i></u>
+        <u><b>Registering URL</b></u>
         <br/>HTTP Method: <b>POST</b>
         <br/>URI: <b>/register</b>
         <br/>Request Header: <b>Authorization</b>
@@ -75,14 +62,14 @@ To access Configuration part use REST call with JSON parameters.
         </ul>
         Description
         <ul>
-            <li>"url" is shorten and is mandatory. "redirectType" is not, it can be 301, but if set as anything else, then it's 302.
-                <br/>"shortUrl" is not always set. Response Body is set empty when authorization fails, and for that case status is set to 401.
-                Response Body is also set to empty when "url" is empty after trimming. In that case status 415 is set.
-                If "url" was already registered it is updated and status is set to 201, else it is created and status is set to 200.</li>
+            <li>"url" is mandatory. "redirectType" is not, it can be 301, but if not set, or if it's not 301, then it's 302.
+                <br/>You can register an url only if authorization succeed. If authorization fails you get Error 401.
+                If url is empty, you get Error 415. </li>
         </ul>
     </li>
+    <br/>
     <li>
-        <u><i>Fetching statistics</i></u>
+        <u><b>Fetching statistics</b></u>
         <br/>HTTP Method: <b>GET</b>
         <br/>URI: <b>/statistic/{accountId}</b>
         <br/>Request Header: <b>Authorization</b>
@@ -92,13 +79,13 @@ To access Configuration part use REST call with JSON parameters.
         </ul>
         Description
         <ul>
-            <li>Response Body is set empty when authorization fails or account set in Authorization header differs from the one stated in URI, and for that case status is set to 401.
-                In other cases, status is set to 200, Response body is set to object populated with key:value order pairs for each url that that account registered.
-                Key represents registered url, and value represents number of times that url was called.</li>
+            <li>To fetch statistics, you have to pass authorization. If authorization fails you get Error 401. If authorization was
+                successful you get number of visits for every link registered with your "accountId".</li>
         </ul>
     </li>
+    <br/>
     <li>
-        <u><i>Redirecting</i></u>
+        <u><b>Redirecting</b></u>
         <br/>Description
         <ul>
             Entering shortUrl provided in "Registering URL" redirection occurs to registered url and number of calls for that url is incremented by 1.
