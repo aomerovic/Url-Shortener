@@ -1,7 +1,7 @@
 # URL Shortener
 
 ### Installation
-There is no external dependencies, therefore no additional installation is required.
+There are no external dependencies, therefore no additional installation is required.
 
 ### Running
 Clone the project using <br />
