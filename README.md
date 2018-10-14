@@ -2,7 +2,7 @@
 
 
 ### Installation
-There is no external dependencies, therefore no additional installation is required.
+There are no external dependencies, therefore no additional installation is required.
 
 ### Running
 Clone the project using <br />
@@ -40,7 +40,7 @@ Create HTTP service used to shorten URLs, with following functionalities:
 - Visits statistic
 <br>
 
-##### Description of the task
+#### Description of the task
 
 ##### 1. Basic architecture
 Service has two parts: configuration and client part.
@@ -59,7 +59,7 @@ URI | /account
 Request Type | application/json
 Request Body | JSON object with following parameters:<ul><li>`accountId (String, required)`</li></ul>Example: {"accountId" : "myAccountId"}
 Response Type | application/json
-Response | There is a difference between successful and unsuccessful registration. Unsuccessful registration happens only when account ID already exists. Parameters are the following: <ul><li>success: true | false</li><li>description: Status description, e.g. Account with that ID already exists</li><li>password: Returned only when account is successfully opened. Automatically generated password 8 alphanumeric characters long.</li></ul> Example {"success":"true", "description":"Your account is opened", password: "xC345Fc"}
+Response | There is a difference between successful and unsuccessful registration. Unsuccessful registration happens only when account ID already exists. Parameters are the following: <ul><li>`success:true\|false`</li><li>`description: Status description, e.g. Account with that ID already exists`</li><li>`password: Returned only when account is successfully opened. Automatically generated password 8 alphanumeric characters long.`</li></ul> Example {"success":"true", "description":"Your account is opened", password: "xC345Fc"}
 
 ###### 1.1.2 Registeration of URLs
 Parameter | Description
@@ -68,7 +68,7 @@ HTTP method | POST
 URI | /register
 Request Type | application/json
 Request Headers | Set the Authorization header, and authorize the user
-Request Body | JSON object with following parameters:	<ul><li>`url (required, url to be shorten)`</li><li>`redirectType : 301 | 302 (not required, default 302)`</li></ul> Example: {"url": "http://stackoverflow.com/questions/1567929/website-safe-data-access-architecture-question?rq=1", "redirectType":"301"}
+Request Body | JSON object with following parameters:	<ul><li>`url (required, url to be shorten)`</li><li>`redirectType : 301 \| 302 (not required, default 302)`</li></ul> Example: {"url": "http://stackoverflow.com/questions/1567929/website-safe-data-access-architecture-question?rq=1", "redirectType":"301"}
 Response Type | application/json
 Response | Response parameters in case of successful registration are the following: <ul><li>`shortUrl (shorten URL)`</li></ul> Example: {"shortUrl":"http://short.com/xYswlE"}
 
