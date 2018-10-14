@@ -38,6 +38,7 @@ Create HTTP service used to shorten URLs, with following functionalities:
 - Redirect client according to shorten URL
 - Visits statistic
 <br>
+
 ##### Description of the task
 
 ##### 1. Basic architecture
@@ -57,7 +58,7 @@ URI | /account
 Request Type | application/json
 Request Body | JSON object with following parameters:<ul><li>`accountId (String, required)`</li></ul>Example: {"accountId" : "myAccountId"}
 Response Type | application/json
-Response | There is a difference between successful and unsuccessful registration. Unsuccessful registration happens only when account ID already exists. Parameters are the following: <ul><li>`success: true | false`</li><li>`description: Status description, e.g. Account with that ID already exists`</li><li>`password: Returned only when account is successfully opened. Automatically generated password 8 alphanumeric characters long.`</li></ul> Example {"success":"true", "description":"Your account is opened", password: "xC345Fc"'}
+Response | There is a difference between successful and unsuccessful registration. Unsuccessful registration happens only when account ID already exists. Parameters are the following: <ul><li>success: true | false</li><li>description: Status description, e.g. Account with that ID already exists</li><li>password: Returned only when account is successfully opened. Automatically generated password 8 alphanumeric characters long.</li></ul> Example {"success":"true", "description":"Your account is opened", password: "xC345Fc"}
 
 ###### 1.1.2 Registeration of URLs
 Parameter | Description
